@@ -1,18 +1,7 @@
-﻿using Blocnot.BL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Microsoft.Win32; // Эту бибилиотеку  надо
 
 namespace Bloknot2
 {
@@ -44,6 +33,9 @@ namespace Bloknot2
             btOpen.Click += BtOpen_Click;
             btSave.Click += BtSave_Click;
             ContentChane += MainWindow_ContentChane;
+            slSize.ValueChanged += SlSize_ValueChanged;
+
+            btSelect.Click += BtSelect_Click;
         }
 
         private void MainWindow_ContentChane(object sender, EventArgs e)
@@ -84,7 +76,32 @@ namespace Bloknot2
 
         public void SetSymbolCount(int count)
         {
-            throw new NotImplementedException();
+            lbCountSimbol.Content += count.ToString();
+        }
+
+        /// <summary>
+        /// Открывает  окно диалга для выбора файла
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtSelect_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog(); //  using Microsoft.Win32; // Эту бибилиотеку  надо
+
+           if  (  dialog.ShowDialog()== true)
+            {
+                tbFilePath.Text = dialog.FileName;
+            }
+        }
+
+        /// <summary>
+        /// Меняет  размер  шрифта контента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SlSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            tbContent.FontSize = slSize.Value;
         }
     }
 }
