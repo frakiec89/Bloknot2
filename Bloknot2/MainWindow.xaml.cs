@@ -73,7 +73,6 @@ namespace Bloknot2
             set { tbContent.AppendText(value); }
         }
 
-
         public void SetSymbolCount(int count)
         {
             lbCountSimbol.Content += count.ToString();
