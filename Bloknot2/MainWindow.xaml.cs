@@ -32,25 +32,55 @@ namespace Bloknot2
     /// </summary>
     public partial class MainWindow : Window ,IMainWindow
     {
-        // todo Реализовать  интрефей IMainWindow
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
-        public string FilePath => throw new NotImplementedException();
-
-        string IMainWindow.Content { get => throw new NotImplementedException(); 
-            set => throw new NotImplementedException(); }
-
-
-        #region Здесь  просыны события
 
         public event EventHandler FileOpen;
         public event EventHandler FileSave;
         public event EventHandler ContentChane;
 
-        #endregion
+      
+        public MainWindow()
+        {
+            InitializeComponent();
+            btOpen.Click += BtOpen_Click;
+            btSave.Click += BtSave_Click;
+            ContentChane += MainWindow_ContentChane;
+        }
+
+        private void MainWindow_ContentChane(object sender, EventArgs e)
+        {
+            if (ContentChane != null)
+            {
+               ContentChane(this, EventArgs.Empty);
+            }
+        }
+
+        private void BtSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (FileSave!=null)
+            {
+                FileSave(this, EventArgs.Empty);
+            }
+        }
+
+        private void BtOpen_Click(object sender, RoutedEventArgs e)
+        {
+            if (FileOpen != null) { FileOpen(this, EventArgs.Empty); }
+        }
+
+        public string FilePath
+        {
+            get
+            {
+                return tbFilePath.Text;
+            }
+        }
+
+        string IMainWindow.Content 
+        { 
+            get { return new TextRange(tbContent.Document.ContentStart, tbContent.Document.ContentEnd).Text; }
+            set { tbContent.AppendText(value); }
+        }
+
 
         public void SetSymbolCount(int count)
         {
