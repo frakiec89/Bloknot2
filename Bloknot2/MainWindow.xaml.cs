@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Documents;
+using Blocnot.BL;
 using Microsoft.Win32; // Эту бибилиотеку  надо
 
 namespace Bloknot2
@@ -32,10 +33,19 @@ namespace Bloknot2
             InitializeComponent();
             btOpen.Click += BtOpen_Click;
             btSave.Click += BtSave_Click;
-            ContentChane += MainWindow_ContentChane;
+            tbContent.TextChanged += MainWindow_ContentChane;
             slSize.ValueChanged += SlSize_ValueChanged;
 
             btSelect.Click += BtSelect_Click;
+
+
+            WindowCollection windowCollection = App.Current.Windows;
+
+
+            FileManager fileMabeger = new FileManager();
+            MessageServis messageServis = new MessageServis();
+             MyPresenter myPresenter = new MyPresenter(messageServis, this , fileMabeger);
+
         }
 
         private void MainWindow_ContentChane(object sender, EventArgs e)
@@ -56,7 +66,12 @@ namespace Bloknot2
 
         private void BtOpen_Click(object sender, RoutedEventArgs e)
         {
-            if (FileOpen != null) { FileOpen(this, EventArgs.Empty); }
+            tbContent.Document = new FlowDocument();
+
+            if (FileOpen != null) 
+            {
+                FileOpen(this, EventArgs.Empty); 
+            }
         }
 
         public string FilePath
@@ -75,7 +90,7 @@ namespace Bloknot2
 
         public void SetSymbolCount(int count)
         {
-            lbCountSimbol.Content += count.ToString();
+            lbCountSimbol.Content = "Колл-во  символов " +  count.ToString();
         }
 
         /// <summary>

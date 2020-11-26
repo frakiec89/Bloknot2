@@ -16,7 +16,7 @@ namespace Bloknot2
         private string _FilePath;
         
 
-        MyPresenter (  IMessageServis message , IMainWindow window , IFileManager manager )
+       public  MyPresenter (  IMessageServis message , IMainWindow window , IFileManager manager )
         {
            _message = message;
            _window = window;
