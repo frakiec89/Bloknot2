@@ -44,7 +44,6 @@
   <ItemGroup>
     <Compile Include="FileManager.cs" />
     <Compile Include="IFileManager.cs" />
-    <Compile Include="MessageServis.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
