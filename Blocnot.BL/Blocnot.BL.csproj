@@ -44,6 +44,9 @@
   <ItemGroup>
     <Compile Include="FileManager.cs" />
     <Compile Include="IFileManager.cs" />
+    <Compile Include="IMainWindow.cs" />
+    <Compile Include="IMassegeManager.cs" />
+    <Compile Include="MyPressenter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -69,5 +69,10 @@
                   x:Name="tbContent" Grid.Row="3"
                   />
         <Button  HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Row="4" x:Name="btSave" Content="Сохранить"   />
+
+
+        <Label x:Name="lbCountSymbol" Grid.Row="5" Margin="1" Padding="1"  Content="кол-во  симлволов: " />
+
+
     </Grid>
 </Window>
