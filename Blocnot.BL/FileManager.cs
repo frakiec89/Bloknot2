@@ -10,7 +10,7 @@ namespace Blocnot.BL
     public class FileManager : IFileManager
     {
 
-        private readonly Encoding _encodingDefoult = Encoding.UTF8;  // дефолтная кодировка
+        private readonly Encoding _encodingDefoult = Encoding.Default; // дефолтная кодировка
 
         public string GetContent(string filePath, Encoding encoding) // 
         {

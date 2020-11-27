@@ -1,18 +1,8 @@
-﻿using Blocnot.BL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using Blocnot.BL;
+using Microsoft.Win32; // Эту бибилиотеку  надо
 
 namespace Bloknot2
 {
@@ -32,29 +22,100 @@ namespace Bloknot2
     /// </summary>
     public partial class MainWindow : Window ,IMainWindow
     {
-        // todo Реализовать  интрефей IMainWindow
-        public MainWindow()
-        {
-            InitializeComponent();
-        }
-
-        public string FilePath => throw new NotImplementedException();
-
-        string IMainWindow.Content { get => throw new NotImplementedException(); 
-            set => throw new NotImplementedException(); }
-
-
-        #region Здесь  просыны события
 
         public event EventHandler FileOpen;
         public event EventHandler FileSave;
         public event EventHandler ContentChane;
 
-        #endregion
+      
+        public MainWindow()
+        {
+            InitializeComponent();
+            btOpen.Click += BtOpen_Click;
+            btSave.Click += BtSave_Click;
+            tbContent.TextChanged += MainWindow_ContentChane;
+            slSize.ValueChanged += SlSize_ValueChanged;
+
+            btSelect.Click += BtSelect_Click;
+
+
+            WindowCollection windowCollection = App.Current.Windows;
+
+
+            FileManager fileMabeger = new FileManager();
+            MessageServis messageServis = new MessageServis();
+             MyPresenter myPresenter = new MyPresenter(messageServis, this , fileMabeger);
+
+        }
+
+        private void MainWindow_ContentChane(object sender, EventArgs e)
+        {
+            if (ContentChane != null)
+            {
+               ContentChane(this, EventArgs.Empty);
+            }
+        }
+
+        private void BtSave_Click(object sender, RoutedEventArgs e)
+        {
+            if (FileSave!=null)
+            {
+                FileSave(this, EventArgs.Empty);
+            }
+        }
+
+        private void BtOpen_Click(object sender, RoutedEventArgs e)
+        {
+            tbContent.Document = new FlowDocument();
+
+            if (FileOpen != null) 
+            {
+                FileOpen(this, EventArgs.Empty); 
+            }
+        }
+
+        public string FilePath
+        {
+            get
+            {
+                return tbFilePath.Text;
+            }
+        }
+
+        string IMainWindow.Content 
+        { 
+            get { return new TextRange(tbContent.Document.ContentStart, tbContent.Document.ContentEnd).Text; }
+            set { tbContent.AppendText(value); }
+        }
 
         public void SetSymbolCount(int count)
         {
-            throw new NotImplementedException();
+            lbCountSimbol.Content = "Колл-во  символов " +  count.ToString();
+        }
+
+        /// <summary>
+        /// Открывает  окно диалга для выбора файла
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtSelect_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog dialog = new OpenFileDialog(); //  using Microsoft.Win32; // Эту бибилиотеку  надо
+
+           if  (  dialog.ShowDialog()== true)
+            {
+                tbFilePath.Text = dialog.FileName;
+            }
+        }
+
+        /// <summary>
+        /// Меняет  размер  шрифта контента
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SlSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            tbContent.FontSize = slSize.Value;
         }
     }
 }
