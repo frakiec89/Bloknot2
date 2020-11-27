@@ -69,5 +69,7 @@
                   x:Name="tbContent" Grid.Row="3"
                   />
         <Button  HorizontalAlignment="Center"  VerticalAlignment="Center" Grid.Row="4" x:Name="btSave" Content="Сохранить"   />
+        <Label></Label>
+        
     </Grid>
 </Window>
